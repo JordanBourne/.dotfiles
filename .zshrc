@@ -60,12 +60,13 @@ alias cls="colorls"
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Pyenv configuration
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-# NVM configuration
+# Check if pyenv is available
+if command -v pyenv 1>/dev/null 2>&1; then
+    # Pyenv configuration
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 export NVM_DIR=~/.nvm
 source "$(brew --prefix nvm)/nvm.sh"
 
@@ -78,8 +79,9 @@ export PATH="$GOPATH/bin:$PATH"
 export PATH="/opt/homebrew/lib/ruby/gems/3.3.0/bin:$PATH"
 export PATH="$HOME/nvim-macos-arm64/bin:$PATH"
 export PATH="$HOME/.config/tmux/.tmuxifier/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+source ~/.config/iterm2/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
