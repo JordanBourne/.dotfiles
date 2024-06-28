@@ -55,7 +55,9 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias cls="colorls"
-
+alias fab="tmuxifier load-session fab"
+alias geni="cd ~/Repos/fabric-platform/frontend/ && npm run genIndexes"
+alias piper="cd ~/Repos/fabric-devops/ && make proxy"
 
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -86,3 +88,15 @@ source ~/.config/iterm2/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 source $(dirname $(gem which colorls))/tab_complete.sh
+
+export PATH="/usr/local/opt/postgresql@15/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/jordanbourne/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jordanbourne/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/jordanbourne/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jordanbourne/google-cloud-sdk/completion.zsh.inc'; fi
+
+
