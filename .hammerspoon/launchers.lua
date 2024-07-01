@@ -14,3 +14,7 @@ end)
 hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "4", function()
 	hs.application.launchOrFocus("Discord")
 end)
+
+hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "5", function()
+	hs.application.launchOrFocus("IntelliJ IDEA")
+end)

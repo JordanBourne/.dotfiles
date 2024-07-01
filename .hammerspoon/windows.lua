@@ -4,12 +4,18 @@ local topEdge = 0.044
 local rightEdge = 1 - leftEdge
 local bottomEdge = 1 - topEdge
 
--- Psuedo full screen
+-- Psuedo full screen all applications
 hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "Z", function()
 	local windows = hs.window.allWindows()
 	for _, win in ipairs(windows) do
 		ResizingWorkaround(win, { x = leftEdge, y = topEdge, w = 1 - (2 * leftEdge), h = 1 - (2 * topEdge) })
 	end
+end)
+
+-- Psudo full screen focused application
+hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "up", function()
+	local win = hs.window.focusedWindow()
+	ResizingWorkaround(win, { x = leftEdge, y = topEdge, w = 1 - (2 * leftEdge), h = 1 - (2 * topEdge) })
 end)
 
 -- Psudo Corner Locations
@@ -34,6 +40,20 @@ hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "I", function()
 	ResizingWorkaround(win, CalculateWindowSize({ x = rightEdge, y = topEdge }, { w = -0.5, h = 0.5 }))
 end)
 
+-- Half Sreen locations
+hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "left", function()
+	local win = hs.window.focusedWindow()
+	-- top right corner
+	ResizingWorkaround(win, { x = leftEdge, y = topEdge, w = 0.5 - leftEdge, h = 1 - (2 * topEdge) })
+end)
+
+hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "right", function()
+	local win = hs.window.focusedWindow()
+	-- top right corner
+	ResizingWorkaround(win, { x = 0.5, y = topEdge, w = (0.5 - leftEdge), h = 1 - (2 * topEdge) })
+end)
+
+-- Split Screens
 hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "/", function()
 	-- select top two windows and split horizontally
 	-- Top window left
