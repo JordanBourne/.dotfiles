@@ -1,3 +1,11 @@
+local prettier = {
+  formatCommand = 'prettierd "${INPUT}"',
+  formatStdin = true,
+  env = {
+    string.format('PRETTIERD_DEFAULT_CONFIG=%s', vim.fn.expand '~/.config/nvim/utils/linter-config/.prettierrc.json'),
+  },
+}
+
 return {
   'stevearc/conform.nvim',
   lazy = false,
@@ -22,7 +30,8 @@ return {
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      javascript = { { 'prettierd', 'prettier' } },
+      javascript = { 'prettierd', 'prettier' },
+      typescript = { 'prettierd', 'prettier' },
     },
   },
 }
