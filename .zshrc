@@ -10,7 +10,7 @@ fi
 
 # Path to your Oh My Zsh installation.
 export ZSH_CUSTOM="$HOME/.config/.zsh" 
-
+export ZSH=$ZSH_CUSTOM
 ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -65,6 +65,7 @@ export PATH="$GOPATH/bin:$PATH"
 export PATH="/opt/homebrew/lib/ruby/gems/3.3.0/bin:$PATH"
 export PATH="$HOME/nvim-macos-arm64/bin:$PATH"
 export PATH="$HOME/.config/tmux/.tmuxifier/bin:$PATH"
+export PATH="$HOME/.cmd/nvim/packages/elixir-ls:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
 source ~/.config/iterm2/powerlevel10k/powerlevel10k.zsh-theme
