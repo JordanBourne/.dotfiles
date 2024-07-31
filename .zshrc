@@ -83,5 +83,5 @@ if [ -f '/Users/jordanbourne/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jo
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/jordanbourne/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jordanbourne/google-cloud-sdk/completion.zsh.inc'; fi
-
+eval "$(zoxide init zsh)"
 

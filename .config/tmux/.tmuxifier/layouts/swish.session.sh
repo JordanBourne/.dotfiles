@@ -1,13 +1,11 @@
-session_root "~/Repos/watchawant/web/"
+session_root "~/Repos/swishlist/"
 
 if initialize_session "swish"; then
   new_window "server"
-  run_cmd "npm run dev"
-  split_v 50
-  run_cmd "npx convex dev"
+  run_cmd "iex -S mix phx.server"
 
   new_window "dev"
-  run_cmd "nvim ."
+  run_cmd "nvim"
 fi
 
 # Finalize session creation and switch/attach to it.

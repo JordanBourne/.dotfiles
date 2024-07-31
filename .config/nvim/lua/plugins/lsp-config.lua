@@ -16,22 +16,73 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+			local capabilities = vim.lsp.protocol.make_client_capabilities()
+			local on_attach = function(_, bufnr) end
+
+			-- Enable the following language servers
+			capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+			local lsp_options = {
+				capabilities = capabilities,
+				on_attach = on_attach,
+				single_file_support = true,
+			}
 
 			local lspconfig = require("lspconfig")
+
 			lspconfig.gopls.setup({
 				capabilities = capabilities,
 			})
+
 			lspconfig.lua_ls.setup({
 				capabilities = capabilities,
 			})
-			lspconfig.elixirls.setup({
-				capabilities = capabilities,
-        cmd = { "/Users/jordanbourne/.local/share/nvim/mason/packages/elixir-ls/language_server.sh" }
-			})
+
+			lspconfig.elixirls.setup(vim.tbl_extend("force", lsp_options, {
+				-- cmd = { "elixir-ls" },
+        cmd = { "/Users/jordanbourne/.local/share/nvim/mason/packages/elixir-ls/language_server.sh" },
+				settings = { elixirLS = { dialyzerEnabled = true } },
+			}))
+
+
+			lspconfig.html.setup(vim.tbl_extend("force", lsp_options, {
+				filetypes = { "html", "elixir", "eelixir", "heex", "tsx", "jsx" },
+				init_options = {
+					userLanguages = {
+						elixir = "html-eex",
+						eelixir = "html-eex",
+						heex = "html-eex",
+					},
+				},
+			}))
+
+			lspconfig.tailwindcss.setup(vim.tbl_extend("force", lsp_options, {
+				filetypes = { "html", "elixir", "eelixir", "heex", "tsx", "jsx" },
+				init_options = {
+					userLanguages = {
+						elixir = "html-eex",
+						eelixir = "html-eex",
+						heex = "html-eex",
+					},
+				},
+				settings = {
+					tailwindCSS = {
+						experimental = {
+							classRegex = {
+								'class[:]\\s*"([^"]*)"',
+								'class[=]\\s*"([^"]*)"',
+							},
+						},
+					},
+				},
+			}))
+
 			lspconfig.tsserver.setup({
 				capabilities = capabilities,
 			})
+
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 				callback = function(event)
@@ -56,4 +107,47 @@ return {
 			})
 		end,
 	},
+  {
+    "hrsh7th/cmp-nvim-lsp",
+  },
+  {
+    "L3MON4D3/LuaSnip",
+    dependencies = {
+      "saadparwaiz1/cmp_luasnip",
+      "rafamadriz/friendly-snippets",
+    },
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    config = function()
+      local cmp = require("cmp")
+      require("luasnip.loaders.from_vscode").lazy_load()
+
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+          end,
+        },
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        }),
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "elixir-ls" },
+        }, {
+          { name = "buffer" },
+        }),
+      })
+    end,
+  },
 }
