@@ -67,6 +67,7 @@ export PATH="$HOME/nvim-macos-arm64/bin:$PATH"
 export PATH="$HOME/.config/tmux/.tmuxifier/bin:$PATH"
 export PATH="$HOME/.cmd/nvim/packages/elixir-ls:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="$PATH:$HOME/elixir-ls"
 
 source ~/.config/iterm2/powerlevel10k/powerlevel10k.zsh-theme
 
@@ -85,3 +86,9 @@ if [ -f '/Users/jordanbourne/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jo
 if [ -f '/Users/jordanbourne/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jordanbourne/google-cloud-sdk/completion.zsh.inc'; fi
 eval "$(zoxide init zsh)"
 
+. "$HOME/.asdf/asdf.sh"
+
+# append completions to fpath
+fpath=(${ASDF_DIR}/completions $fpath)
+# initialise completions with ZSH's compinit
+autoload -Uz compinit && compinit
