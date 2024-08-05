@@ -7,13 +7,24 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "theme": "Atelier Sulphurpool Light",
+  "current_line_highlight": "line",
+  "project_panel": {
+    "dock": "right"
+  },
   "terminal": {
-    "dock": "bottom"
+    "dock": "bottom",
+    "font_family": "MesloLGS NF"
   },
   "base_keymap": "JetBrains",
   "vim_mode": true,
+  "vim": {
+    "use_system_clipboard": "never",
+    "use_multiline_find": true
+  },
   "ui_font_size": 16,
   "buffer_font_size": 16,
+  "autosave": "on_focus_change",
   "features": {
     "inline_completion_provider": "supermaven"
   },
@@ -25,6 +36,23 @@
           "arguments": ["format", "--stdin-filename", "{buffer_path}", "-"]
         }
       }
+    },
+    "JavaScript": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
+    },
+    "TypeScript": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true,
+        "source.organizeImports": true
+      }
+    },
+    "TSX": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true,
+        "source.organizeImports": true
+      }
     }
   },
   "lsp": {
@@ -32,11 +60,61 @@
       "settings": {
         "dialyzerEnabled": true
       }
+    },
+    "eslint": {
+      "settings": {
+        "nodePath": ".eslintrc"
+      }
     }
   },
-  "theme": {
-    "mode": "system",
-    "light": "Rosé Pine",
-    "dark": "One Dark"
+  "language_overrides": {
+    "TypeScript": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "node_modules/.bin/eslint_d",
+          "arguments": [
+            "--config",
+            ".eslintrc",
+            "--stdin",
+            "--stdin-filename",
+            "{buffer_path}",
+            "--fix-to-stdout"
+          ]
+        }
+      }
+    },
+    "JavaScript": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "node_modules/.bin/eslint_d",
+          "arguments": [
+            "--config",
+            ".eslintrc",
+            "--stdin",
+            "--stdin-filename",
+            "{buffer_path}",
+            "--fix-to-stdout"
+          ]
+        }
+      }
+    },
+    "TSX": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "node_modules/.bin/eslint_d",
+          "arguments": [
+            "--config",
+            ".eslintrc",
+            "--stdin",
+            "--stdin-filename",
+            "{buffer_path}",
+            "--fix-to-stdout"
+          ]
+        }
+      }
+    }
   }
 }

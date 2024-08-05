@@ -12,6 +12,16 @@
     }
   },
   {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "ctrl-d": ["workspace::SendKeystrokes", "2 5 j z z"],
+      "ctrl-u": ["workspace::SendKeystrokes", "2 5 k z z"],
+      "space y": ["workspace::SendKeystrokes", "\" + y"],
+      "space p": ["workspace::SendKeystrokes", "\" + p"],
+      "space shift-y": ["workspace::SendKeystrokes", "\" + shift-y"]
+    }
+  },
+  {
     "context": "Editor",
     "bindings": {}
   },
