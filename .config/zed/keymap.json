@@ -8,6 +8,10 @@
     "bindings": {
       "space s f": "file_finder::Toggle",
       "space s g": "pane::DeploySearch",
+      "space t r": ["task::Rerun", {}],
+      "space t a": ["task::Spawn", { "task_name": "Elixir Test All" }],
+      "space t f": ["task::Spawn", { "task_name": "Elixir Test File" }],
+      "space t n": ["task::Spawn", { "task_name": "Elixir Test Nearest" }],
       "space `": "workspace::ToggleBottomDock"
     }
   },
