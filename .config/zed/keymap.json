@@ -4,25 +4,43 @@
 // from the command palette.
 [
   {
-    "context": "Workspace",
+    "context": "Workspace || Pane || Editor",
     "bindings": {
-      "space s f": "file_finder::Toggle",
-      "space s g": "pane::DeploySearch",
-      "space t r": ["task::Rerun", {}],
-      "space t a": ["task::Spawn", { "task_name": "Elixir Test All" }],
-      "space t f": ["task::Spawn", { "task_name": "Elixir Test File" }],
-      "space t n": ["task::Spawn", { "task_name": "Elixir Test Nearest" }],
-      "space `": "workspace::ToggleBottomDock"
+      "ctrl-s h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-s j": ["workspace::ActivatePaneInDirection", "Down"],
+      "ctrl-s k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-s l": ["workspace::ActivatePaneInDirection", "Right"],
+      "cmd-h": "workspace::ToggleLeftDock",
+      "cmd-l": "workspace::ToggleRightDock",
+      "cmd-j": "workspace::ToggleBottomDock",
+      "ctrl-cmd-y": "workspace::CloseAllDocks",
+      "cmd-shift-f": "pane::DeploySearch"
     }
   },
   {
     "context": "VimControl && !menu",
     "bindings": {
+      // Nav Commands
       "ctrl-d": ["workspace::SendKeystrokes", "2 5 j z z"],
       "ctrl-u": ["workspace::SendKeystrokes", "2 5 k z z"],
+
+      // Copy Paste Commands
       "space y": ["workspace::SendKeystrokes", "\" + y"],
       "space p": ["workspace::SendKeystrokes", "\" + p"],
-      "space shift-y": ["workspace::SendKeystrokes", "\" + shift-y"]
+      "space shift-y": ["workspace::SendKeystrokes", "\" + shift-y"],
+
+      // Search Commands
+      "space s f": "file_finder::Toggle",
+      "space s g": "pane::DeploySearch",
+
+      // Test Tasks
+      "space t r": ["task::Rerun", {}],
+      "space t a": ["task::Spawn", { "task_name": "Elixir Test All" }],
+      "space t f": ["task::Spawn", { "task_name": "Elixir Test File" }],
+      "space t n": ["task::Spawn", { "task_name": "Elixir Test Nearest" }],
+
+      // Dock Commands
+      "space `": "workspace::ToggleBottomDock"
     }
   },
   {

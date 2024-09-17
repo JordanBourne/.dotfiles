@@ -1,12 +1,13 @@
 {
-  "theme": "Ayu Dark",
+  "theme": "Andromeda",
   "current_line_highlight": "line",
   "project_panel": {
     "dock": "right"
   },
   "terminal": {
+    "shell": "system",
     "dock": "bottom",
-    "font_family": "JetBrainsMono Nerd Font Mono"
+    "font_family": "MesloLGS NF"
   },
   "base_keymap": "JetBrains",
   "vim_mode": true,
@@ -14,8 +15,8 @@
     // "use_system_clipboard": "never",
     "use_multiline_find": true
   },
-  "ui_font_size": 16,
-  "buffer_font_size": 16,
+  "ui_font_size": 15,
+  "buffer_font_size": 15,
   "autosave": "on_focus_change",
   "features": {
     "inline_completion_provider": "supermaven"
@@ -50,12 +51,12 @@
   "lsp": {
     "elixir-ls": {
       "settings": {
-        "dialyzerEnabled": true
+        "dialyzerenabled": true
       }
     },
     "eslint": {
       "settings": {
-        "nodePath": ".eslintrc"
+        "nodepath": "$ZED_DIRNAME/.eslintrc"
       }
     }
   },

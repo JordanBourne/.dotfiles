@@ -106,8 +106,9 @@ end
 
 function ResizingWorkaround(win, pos)
 	local winApp = win:application():name()
+  print(winApp)
 	-- add Applescript-capable apps you are using to the if-condition below
-	if winApp == "Finder" or winApp == "Firefox" or winApp == "iTerm2" then
+	if winApp == "Finder" or winApp == "Firefox" or winApp == "iTerm2" or winApp == "Zen Browser" then
 		local verticalOffset = 24 * (1 - pos.y) + 1
 		hs.applescript(
 			[[

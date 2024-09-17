@@ -1,0 +1,154 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "functional"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript"
+  ],
+  "rules": {
+    "indent": [
+      "error",
+      4
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_$",
+        "varsIgnorePattern": "^_$",
+        "caughtErrorsIgnorePattern": "^_$"
+      }
+    ],
+    "@typescript-eslint/no-namespace": [
+      "error",
+      {
+        "allowDeclarations": true
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true,
+        "allowTypedFunctionExpressions": true,
+        "allowHigherOrderFunctions": true
+      }
+    ],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
+    "object-curly-spacing": ["error", "always"],
+    "import/no-restricted-paths": [
+      "error",
+      {
+        "zones": [
+          {
+            "target": "**/FabricComponents/**/*",
+            "from": "**/InsightComponents/**/*",
+            "message": "Cannot import from Insight :)"
+          },
+          {
+            "target": "**/InsuranceComponents/**/*",
+            "from": "**/InsightComponents/**/*",
+            "message": "Cannot import from Insight :)"
+          },
+          {
+            "target": "**/FabricComponents/**/*",
+            "from": "**/InsuranceComponents/**/*",
+            "message": "Cannot import from Insurance :)"
+          },
+          {
+            "target": "**/FabricComponents/**/*",
+            "from": "**/Apps/InsightState/**/*",
+            "message": "Cannot import from Insight state"
+          },
+          {
+            "target": "**/FabricComponents/**/*",
+            "from": "**/Apps/InsightStateHooks/**/*",
+            "message": "Cannot import from Insight state"
+          }
+        ]
+      }
+    ],
+    "import/no-internal-modules": [
+      "error",
+      {
+        "allow": [
+          "**/Apps/*",
+          "**/SupportComponents/*",
+          "**/FabricComponents/*",
+          "**/InsightComponents/*",
+          "**/InsightBetaComponents/*",
+          "**/SharedInsightComponents/*",
+          "**/InsuranceComponents/*",
+          "**/AdminComponents/*",
+          "**/*.css",
+          "react-dom/client"
+        ]
+      }
+    ],
+    "import/no-cycle": [
+      "error",
+      {
+        "maxDepth": 3,
+        "ignoreExternal": true
+      }
+    ],
+    "functional/no-class": [
+      "error"
+    ],
+    "functional/no-method-signature": [
+      "error"
+    ],
+    "functional/prefer-readonly-type": [
+      "error"
+    ],
+    "functional/no-this-expression": [
+      "error"
+    ],
+    "functional/no-promise-reject": [
+      "error"
+    ],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.slice.ts"
+      ],
+      "rules": {
+        "no-param-reassign": [
+          "error",
+          {
+            "props": true,
+            "ignorePropertyModificationsFor": [
+              "state"
+            ]
+          }
+        ],
+        "functional/prefer-readonly-type": "off"
+      }
+    }
+  ]
+}
