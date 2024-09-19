@@ -11,7 +11,7 @@ return {
         suggestion_color = '#e5c6f7',
         cterm = 244,
       },
-      disable_inline_completion = false,
+      disable_inline_completion = true,
     }
 
     vim.keymap.set('n', '<leader>mt', '<cmd>SupermavenToggle<cr>', { desc = 'Toggle SuperMaven' })

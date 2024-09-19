@@ -9,7 +9,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "gopls", "lua_ls", "tsserver" },
+        ensure_installed = { "gopls", "lua_ls", "ts_ls" },
       })
     end,
   },
@@ -33,6 +33,10 @@ return {
       local lspconfig = require("lspconfig")
 
       lspconfig.gopls.setup({
+        capabilities = capabilities,
+      })
+
+      lspconfig.rust_analyzer.setup({
         capabilities = capabilities,
       })
 
@@ -79,7 +83,7 @@ return {
         },
       }))
 
-      lspconfig.tsserver.setup({
+      lspconfig.ts_ls.setup({
         capabilities = capabilities,
       })
 
@@ -138,10 +142,12 @@ return {
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+          ["<C-s>"] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
+          { name = "rust_analyzer" },
           { name = "luasnip" },
           { name = "elixir-ls" },
           { name = "supermaven" },

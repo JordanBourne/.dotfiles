@@ -38,6 +38,7 @@
       "space t a": ["task::Spawn", { "task_name": "Elixir Test All" }],
       "space t f": ["task::Spawn", { "task_name": "Elixir Test File" }],
       "space t n": ["task::Spawn", { "task_name": "Elixir Test Nearest" }],
+      "space t i": ["task::Spawn", { "task_name": "Elixir Test Include" }],
 
       // Dock Commands
       "space `": "workspace::ToggleBottomDock"

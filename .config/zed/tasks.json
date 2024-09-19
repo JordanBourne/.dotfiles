@@ -11,6 +11,10 @@
     "command": "source .env && mix test $ZED_RELATIVE_FILE"
   },
   {
+    "label": "Elixir Test Include",
+    "command": "source .env && mix test $ZED_RELATIVE_FILE --include external:true"
+  },
+  {
     "label": "Elixir Test All",
     "command": "source .env && mix test"
   },
