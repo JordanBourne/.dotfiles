@@ -8,7 +8,7 @@ hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "2", function()
 end)
 
 hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "3", function()
-	hs.application.launchOrFocus("iTerm")
+	hs.application.launchOrFocus("Kitty")
 end)
 
 hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "4", function()
