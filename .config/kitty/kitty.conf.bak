@@ -4,4 +4,11 @@ include current-theme.conf
 font_family      CaskaydiaMono Nerd Font Mono
 # font_family      MesloLGL Nerd Font Mono
 font_size 15.0
+# macos_titlebar_color #323232
 
+
+
+# BEGIN_KITTY_THEME
+# Catppuccin-Latte
+include current-theme.conf
+# END_KITTY_THEME
