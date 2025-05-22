@@ -6,7 +6,7 @@ return {
 
     configs.setup({
       auto_install = true,
-      ensure_installed = { "lua", "javascript", "html", "typescript", "elixir", "eex", "heex" },
+      ensure_installed = {},
       highlight = { enable = true },
       indent = { enable = true },
     })

@@ -9,7 +9,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "gopls", "lua_ls", "ts_ls" },
+        ensure_installed = { "gopls", "lua_ls" },
       })
     end,
   },
@@ -52,7 +52,7 @@ return {
       }))
 
       lspconfig.html.setup(vim.tbl_extend("force", lsp_options, {
-        filetypes = { "html", "elixir", "eelixir", "heex", "tsx", "jsx" },
+        filetypes = { "html", "elixir", "eelixir", "heex" },
         init_options = {
           userLanguages = {
             elixir = "html-eex",
@@ -63,7 +63,7 @@ return {
       }))
 
       lspconfig.tailwindcss.setup(vim.tbl_extend("force", lsp_options, {
-        filetypes = { "html", "elixir", "eelixir", "heex", "tsx", "jsx" },
+        filetypes = { "html", "elixir", "eelixir", "heex" },
         init_options = {
           userLanguages = {
             elixir = "html-eex",
@@ -82,10 +82,6 @@ return {
           },
         },
       }))
-
-      lspconfig.ts_ls.setup({
-        capabilities = capabilities,
-      })
 
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
@@ -150,7 +146,6 @@ return {
           { name = "rust_analyzer" },
           { name = "luasnip" },
           { name = "elixir-ls" },
-          { name = "supermaven" },
         }, {
           { name = "buffer" },
         }),
