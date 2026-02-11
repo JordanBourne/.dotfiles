@@ -1,76 +1,49 @@
 return {
+  -- Mason: installs LSP binaries
   {
     "williamboman/mason.nvim",
     config = function()
       require("mason").setup()
     end,
   },
+
+  -- Optional: you can remove this if you want fully manual installs
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "gopls", "lua_ls" },
+        ensure_installed = {
+          "rust_analyzer",
+          "html",
+          "tailwindcss",
+        },
       })
     end,
   },
+
+  -- Core LSP (Neovim 0.11+ native API)
   {
     "neovim/nvim-lspconfig",
     config = function()
-      -- local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      local on_attach = function(_, bufnr) end
+      local capabilities =
+        require("cmp_nvim_lsp").default_capabilities(
+          vim.lsp.protocol.make_client_capabilities()
+        )
 
-      -- Enable the following language servers
-      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-
-      local lsp_options = {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        single_file_support = true,
-      }
-
-      local lspconfig = require("lspconfig")
-
-      lspconfig.gopls.setup({
+      -- Register servers (NEW API)
+      vim.lsp.config("rust_analyzer", {
         capabilities = capabilities,
       })
 
-      lspconfig.rust_analyzer.setup({
+      vim.lsp.config("html", {
         capabilities = capabilities,
+        filetypes = { "html" },
+        init_options = { },
       })
 
-      lspconfig.lua_ls.setup({
+      vim.lsp.config("tailwindcss", {
         capabilities = capabilities,
-      })
-
-      lspconfig.elixirls.setup(vim.tbl_extend("force", lsp_options, {
-        -- cmd = { "elixir-ls" },
-        filetypes = { "elixir", "eelixir", "heex", "surface" },
-        cmd = { vim.fn.expand("~/elixir-ls/language_server.sh") },
-        settings = { elixirLS = { dialyzerEnabled = false } },
-      }))
-
-      lspconfig.html.setup(vim.tbl_extend("force", lsp_options, {
-        filetypes = { "html", "elixir", "eelixir", "heex" },
-        init_options = {
-          userLanguages = {
-            elixir = "html-eex",
-            eelixir = "html-eex",
-            heex = "html-eex",
-          },
-        },
-      }))
-
-      lspconfig.tailwindcss.setup(vim.tbl_extend("force", lsp_options, {
-        filetypes = { "html", "elixir", "eelixir", "heex" },
-        init_options = {
-          userLanguages = {
-            elixir = "html-eex",
-            eelixir = "html-eex",
-            heex = "html-eex",
-          },
-        },
+        filetypes = { "html" },
         settings = {
           tailwindCSS = {
             experimental = {
@@ -81,30 +54,28 @@ return {
             },
           },
         },
-      }))
+      })
 
+      -- LSP keymaps + format-on-save
       vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
+        group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
         callback = function(event)
           local map = function(keys, func, desc)
             vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
-          map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-          map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-          map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-          map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-          map(
-            "<leader>ws",
-            require("telescope.builtin").lsp_dynamic_workspace_symbols,
-            "[W]orkspace [S]ymbols"
-          )
-          map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-          map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
-          map("K", vim.lsp.buf.hover, "Hover Documentation")
-          map("gd", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
-          -- Autoformat on save
-          if vim.lsp.get_client_by_id(event.data.client_id).server_capabilities.documentFormattingProvider then
+          map("gr", require("telescope.builtin").lsp_references, "Goto References")
+          map("gI", require("telescope.builtin").lsp_implementations, "Goto Implementation")
+          map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type Definition")
+          map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
+          map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
+          map("<leader>rn", vim.lsp.buf.rename, "Rename")
+          map("<leader>ca", vim.lsp.buf.code_action, "Code Action")
+          map("K", vim.lsp.buf.hover, "Hover")
+          map("gd", vim.lsp.buf.definition, "Goto Definition")
+
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if client and client.server_capabilities.documentFormattingProvider then
             vim.api.nvim_create_autocmd("BufWritePre", {
               buffer = event.buf,
               callback = function()
@@ -116,28 +87,23 @@ return {
       })
     end,
   },
+
+  -- cmp + LSP integration
   {
     "hrsh7th/cmp-nvim-lsp",
   },
-  {
-    "L3MON4D3/LuaSnip",
-    dependencies = {
-      "saadparwaiz1/cmp_luasnip",
-      "rafamadriz/friendly-snippets",
-    },
-  },
+
   {
     "hrsh7th/nvim-cmp",
+    dependencies = {
+      "L3MON4D3/LuaSnip",
+      "saadparwaiz1/cmp_luasnip",
+    },
     config = function()
       local cmp = require("cmp")
       require("luasnip.loaders.from_vscode").lazy_load()
 
       cmp.setup({
-        snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-          end,
-        },
         window = {
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
@@ -147,13 +113,11 @@ return {
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<C-a>"] = cmp.mapping.confirm({ select = true }),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
-          { name = "rust_analyzer" },
           { name = "luasnip" },
-          { name = "elixir-ls" },
         }, {
           { name = "buffer" },
         }),
@@ -161,3 +125,4 @@ return {
     end,
   },
 }
+

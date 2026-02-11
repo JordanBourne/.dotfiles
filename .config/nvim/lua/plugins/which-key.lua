@@ -2,9 +2,12 @@ return {
   "folke/which-key.nvim",
   event = "VeryLazy",
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
+    spec = {
+      { "ys", desc = "Add surround", mode = "n" },
+      { "ds", desc = "Delete surround", mode = "n" },
+      { "cs", desc = "Change surround", mode = "n" },
+      { "S", desc = "Add surround", mode = "v" },
+    },
   },
   keys = {
     {
